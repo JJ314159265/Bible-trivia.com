@@ -79,11 +79,19 @@
         <section id="view-quiz" class="view-section hidden space-y-6">
             <!-- Quiz Controls / Filter Bar -->
             <div class="bg-white p-4 rounded-2xl shadow-sm border border-amber-200 flex flex-wrap items-center justify-between gap-4">
-                <div class="flex items-center space-x-3">
-                    <span class="text-xs font-bold uppercase tracking-wider text-stone-500">Filter Book:</span>
-                    <select id="quizBookFilter" onchange="resetQuiz()" class="bg-amber-50 border border-amber-200 text-stone-800 text-sm rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-amber-600">
-                        <option value="ALL">All Books of the Bible</option>
-                    </select>
+                <div class="flex flex-wrap items-center gap-3">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-stone-500 block mb-1">Filter Book:</span>
+                        <select id="quizBookFilter" onchange="resetQuiz()" class="bg-amber-50 border border-amber-200 text-stone-800 text-sm rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-amber-600">
+                            <option value="ALL">All Books</option>
+                        </select>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-stone-500 block mb-1">Filter Category:</span>
+                        <select id="quizCategoryFilter" onchange="resetQuiz()" class="bg-amber-50 border border-amber-200 text-stone-800 text-sm rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-amber-600">
+                            <option value="ALL">All Categories</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="flex items-center space-x-4 text-sm font-semibold text-stone-700">
                     <div>Score: <span id="quizScore" class="text-amber-800">0</span></div>
@@ -94,7 +102,9 @@
             <!-- Quiz Card Box -->
             <div id="quizCardContainer" class="bg-white rounded-3xl shadow-sm border border-amber-200 p-6 sm:p-8 space-y-6">
                 <div class="flex justify-between items-center">
-                    <span id="quizCategoryBadge" class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Category</span>
+                    <div id="quizCategoryBadges" class="flex flex-wrap gap-1.5">
+                        <!-- Dynamic category tags injected here -->
+                    </div>
                     <span id="quizTimer" class="text-xs font-bold text-stone-500 bg-stone-100 px-3 py-1 rounded-full"><i class="fa-regular fa-clock mr-1"></i> <span id="timeLeft">15</span>s</span>
                 </div>
 
@@ -136,11 +146,19 @@
         <section id="view-flashcards" class="view-section hidden space-y-6">
             <!-- Flashcard Control / Filter Bar -->
             <div class="bg-white p-4 rounded-2xl shadow-sm border border-amber-200 flex flex-wrap items-center justify-between gap-4">
-                <div class="flex items-center space-x-3">
-                    <span class="text-xs font-bold uppercase tracking-wider text-stone-500">Filter Book:</span>
-                    <select id="flashcardBookFilter" onchange="resetFlashcards()" class="bg-amber-50 border border-amber-200 text-stone-800 text-sm rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-amber-600">
-                        <option value="ALL">All Books of the Bible</option>
-                    </select>
+                <div class="flex flex-wrap items-center gap-3">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-stone-500 block mb-1">Filter Book:</span>
+                        <select id="flashcardBookFilter" onchange="resetFlashcards()" class="bg-amber-50 border border-amber-200 text-stone-800 text-sm rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-amber-600">
+                            <option value="ALL">All Books</option>
+                        </select>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-stone-500 block mb-1">Filter Category:</span>
+                        <select id="flashcardCategoryFilter" onchange="resetFlashcards()" class="bg-amber-50 border border-amber-200 text-stone-800 text-sm rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-amber-600">
+                            <option value="ALL">All Categories</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="text-sm font-semibold text-stone-700">
                     Card <span id="fcCurrentIndex" class="text-amber-800">1</span> of <span id="fcTotalCount" class="text-amber-800">1</span>
@@ -154,7 +172,9 @@
                     <!-- FRONT OF CARD (Question) -->
                     <div class="absolute inset-0 backface-hidden p-8 flex flex-col justify-between rounded-3xl bg-white">
                         <div class="flex justify-between items-center">
-                            <span id="fcCategoryBadge" class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Category</span>
+                            <div id="fcCategoryBadges" class="flex flex-wrap gap-1.5">
+                                <!-- Dynamic category tags injected here -->
+                            </div>
                             <span class="text-xs text-stone-400 font-medium"><i class="fa-solid fa-rotate mr-1"></i> Click anywhere to flip</span>
                         </div>
                         <div class="text-center my-auto space-y-3">
@@ -207,7 +227,7 @@
             <div class="bg-white rounded-3xl shadow-sm border border-amber-200 p-6 sm:p-8 space-y-6">
                 <div>
                     <h3 class="text-xl font-bold text-stone-900 mb-1">Google Sheets CSV Integration</h3>
-                    <p class="text-stone-600 text-sm">Connect your published Google Sheet containing your Bible questions. The website automatically filters out duplicate entries so your database stays pristine!</p>
+                    <p class="text-stone-600 text-sm">Connect your published Google Sheet containing your Bible questions. Separate multiple categories with commas (e.g., <span class="font-mono text-amber-800 font-bold">History, Prophecy</span>).</p>
                 </div>
 
                 <div class="space-y-4">
@@ -249,7 +269,7 @@
         const defaultQuestions = [
             {
                 Book: "Genesis",
-                Category: "Creation & History",
+                Category: "Creation, History",
                 Question: "According to Genesis, on which day did God create land animals and man?",
                 OptionA: "Day 3",
                 OptionB: "Day 5",
@@ -261,7 +281,7 @@
             },
             {
                 Book: "Exodus",
-                Category: "Law & History",
+                Category: "Law, Miracles, History",
                 Question: "Through which miraculous event did the Israelites escape bondage in Egypt?",
                 OptionA: "The Fall of Jericho",
                 OptionB: "The Parting of the Red Sea",
@@ -273,7 +293,7 @@
             },
             {
                 Book: "Psalms",
-                Category: "Poetry & Wisdom",
+                Category: "Poetry, Wisdom",
                 Question: "Which famous psalm begins with the words, 'The Lord is my shepherd; I shall not want'?",
                 OptionA: "Psalm 23",
                 OptionB: "Psalm 91",
@@ -285,7 +305,7 @@
             },
             {
                 Book: "John",
-                Category: "Gospels",
+                Category: "Gospels, Life of Christ",
                 Question: "What is the shortest verse in the English Bible, found in the Gospel of John?",
                 OptionA: "Jesus wept.",
                 OptionB: "God is love.",
@@ -297,7 +317,7 @@
             },
             {
                 Book: "Revelation",
-                Category: "Prophecy",
+                Category: "Prophecy, End Times",
                 Question: "What is the final book of the New Testament?",
                 OptionA: "Jude",
                 OptionB: "Acts",
@@ -323,6 +343,7 @@
         // Flashcard State
         let fcIndex = 0;
         let isCardFlipped = false;
+        let activeFlashcards = [];
 
         // Initialization
         window.addEventListener('DOMContentLoaded', () => {
@@ -330,7 +351,6 @@
         });
 
         function initData(rawArray, sourceDescription) {
-            // Deduplicate questions based on exact Question text matching (case-insensitive & trimmed)
             const seenTexts = new Set();
             questions = [];
             duplicateCount = 0;
@@ -342,9 +362,14 @@
                     duplicateCount++;
                 } else {
                     seenTexts.add(cleanText);
+                    
+                    // Split categories by comma if multiple are provided
+                    const rawCatString = q.Category || "Trivia";
+                    const categoriesArray = rawCatString.split(',').map(c => c.trim()).filter(c => c.length > 0);
+
                     questions.push({
                         Book: (q.Book || "General").trim(),
-                        Category: (q.Category || "Trivia").trim(),
+                        Categories: categoriesArray,
                         Question: q.Question.trim(),
                         OptionA: (q.OptionA || "").trim(),
                         OptionB: (q.OptionB || "").trim(),
@@ -358,7 +383,7 @@
             });
 
             document.getElementById('dataSourceLabel').innerText = sourceDescription;
-            populateBookDropdowns();
+            populateDropdowns();
             resetQuiz();
             resetFlashcards();
         }
@@ -368,7 +393,6 @@
             document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
             document.getElementById(`view-${viewId}`).classList.remove('hidden');
 
-            // Update Tab Styling
             ['home', 'quiz', 'flashcards', 'config'].forEach(id => {
                 const btn = document.getElementById(`nav-${id}`);
                 if (btn) {
@@ -384,24 +408,42 @@
             if (viewId === 'flashcards') resetFlashcards();
         }
 
-        // Dropdown Populate
-        function populateBookDropdowns() {
+        // Dropdown Populate for Books and Categories
+        function populateDropdowns() {
             const books = [...new Set(questions.map(q => q.Book))].sort();
-            const quizSelect = document.getElementById('quizBookFilter');
-            const fcSelect = document.getElementById('flashcardBookFilter');
+            
+            // Extract all unique categories across all questions
+            const allCatsSet = new Set();
+            questions.forEach(q => {
+                q.Categories.forEach(c => allCatsSet.add(c));
+            });
+            const categories = [...allCatsSet].sort();
 
-            const optionsHtml = '<option value="ALL">All Books of the Bible</option>' + 
-                books.map(b => `<option value="${b}">${b}</option>`).join('');
+            // Populate Quiz dropdowns
+            const quizBookSelect = document.getElementById('quizBookFilter');
+            const quizCatSelect = document.getElementById('quizCategoryFilter');
 
-            quizSelect.innerHTML = optionsHtml;
-            fcSelect.innerHTML = optionsHtml;
+            quizBookSelect.innerHTML = '<option value="ALL">All Books</option>' + books.map(b => `<option value="${b}">${b}</option>`).join('');
+            quizCatSelect.innerHTML = '<option value="ALL">All Categories</option>' + categories.map(c => `<option value="${c}">${c}</option>`).join('');
+
+            // Populate Flashcard dropdowns
+            const fcBookSelect = document.getElementById('flashcardBookFilter');
+            const fcCatSelect = document.getElementById('flashcardCategoryFilter');
+
+            fcBookSelect.innerHTML = '<option value="ALL">All Books</option>' + books.map(b => `<option value="${b}">${b}</option>`).join('');
+            fcCatSelect.innerHTML = '<option value="ALL">All Categories</option>' + categories.map(c => `<option value="${c}">${c}</option>`).join('');
         }
 
         // --- QUIZ LOGIC ---
         function getFilteredQuizQuestions() {
             const selectedBook = document.getElementById('quizBookFilter').value;
-            if (selectedBook === 'ALL') return questions;
-            return questions.filter(q => q.Book === selectedBook);
+            const selectedCat = document.getElementById('quizCategoryFilter').value;
+
+            return questions.filter(q => {
+                const matchesBook = (selectedBook === 'ALL' || q.Book === selectedBook);
+                const matchesCat = (selectedCat === 'ALL' || q.Categories.includes(selectedCat));
+                return matchesBook && matchesCat;
+            });
         }
 
         function resetQuiz() {
@@ -419,12 +461,11 @@
             document.getElementById('quizExplanationBox').classList.add('hidden');
 
             if (activeQuestions.length === 0) {
-                document.getElementById('quizCardContainer').innerHTML = '<p class="text-center text-stone-500 py-8">No questions found for this book filter.</p>';
+                document.getElementById('quizCardContainer').innerHTML = '<p class="text-center text-stone-500 py-8">No questions found matching these filters.</p>';
                 return;
             }
 
             if (quizIndex >= activeQuestions.length) {
-                // Quiz Finished
                 document.getElementById('quizCardContainer').classList.add('hidden');
                 document.getElementById('quizCompleteScreen').classList.remove('hidden');
                 document.getElementById('quizFinalScoreText').innerText = `You scored ${quizScore} out of ${activeQuestions.length} correct answers!`;
@@ -434,7 +475,12 @@
             const currentQ = activeQuestions[quizIndex];
             document.getElementById('quizScore').innerText = quizScore;
             document.getElementById('quizProgress').innerText = `${quizIndex + 1}/${activeQuestions.length}`;
-            document.getElementById('quizCategoryBadge').innerText = `${currentQ.Book} • ${currentQ.Category}`;
+            
+            // Build Category Badges HTML
+            const badgesHtml = `<span class="bg-amber-800 text-amber-100 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">${currentQ.Book}</span>` +
+                currentQ.Categories.map(cat => `<span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">${cat}</span>`).join('');
+            document.getElementById('quizCategoryBadges').innerHTML = badgesHtml;
+
             document.getElementById('quizQuestionText').innerText = currentQ.Question;
 
             // Build Options
@@ -476,7 +522,6 @@
                 buttonElem.className = "option-btn text-left p-4 rounded-2xl border border-emerald-500 bg-emerald-100 text-emerald-900 font-medium text-sm shadow-sm transition-all";
             } else {
                 buttonElem.className = "option-btn text-left p-4 rounded-2xl border border-rose-500 bg-rose-100 text-rose-900 font-medium text-sm shadow-sm transition-all";
-                // Highlight the right choice
                 allButtons.forEach(btn => {
                     if (btn.innerText.trim().toLowerCase() === correct.trim().toLowerCase()) {
                         btn.className = "option-btn text-left p-4 rounded-2xl border border-emerald-500 bg-emerald-100 text-emerald-900 font-medium text-sm shadow-sm transition-all";
@@ -508,7 +553,6 @@
             html += `<br><span class="mt-1 block">${currentQ.Explanation}</span>`;
             textElem.innerHTML = html;
 
-            // Setup YouVersion Bible.com Link
             const refQuery = encodeURIComponent(currentQ.Reference || currentQ.Book);
             document.getElementById('quizYouVersionLink').href = `https://www.bible.com/search/bible?q=${refQuery}`;
 
@@ -523,38 +567,44 @@
         // --- FLASHCARD LOGIC ---
         function getFilteredFlashcardQuestions() {
             const selectedBook = document.getElementById('flashcardBookFilter').value;
-            if (selectedBook === 'ALL') return [...questions];
-            return questions.filter(q => q.Book === selectedBook);
-        }
+            const selectedCat = document.getElementById('flashcardCategoryFilter').value;
 
-        let activeFlashcards = [];
+            return questions.filter(q => {
+                const matchesBook = (selectedBook === 'ALL' || q.Book === selectedBook);
+                const matchesCat = (selectedCat === 'ALL' || q.Categories.includes(selectedCat));
+                return matchesBook && matchesCat;
+            });
+        }
 
         function resetFlashcards() {
             activeFlashcards = getFilteredFlashcardQuestions();
             fcIndex = 0;
-            isCardFlipped = true; // Force unflip animation setup
+            isCardFlipped = true;
             flipFlashcard(true);
             loadFlashcardContent();
         }
 
         function loadFlashcardContent() {
             if (activeFlashcards.length === 0) {
-                document.getElementById('fcQuestionText').innerText = "No flashcards found.";
+                document.getElementById('fcQuestionText').innerText = "No flashcards found matching these filters.";
                 document.getElementById('fcTotalCount').innerText = "0";
                 document.getElementById('fcCurrentIndex').innerText = "0";
+                document.getElementById('fcCategoryBadges').innerHTML = '';
                 return;
             }
 
             const currentQ = activeFlashcards[fcIndex];
             document.getElementById('fcCurrentIndex').innerText = fcIndex + 1;
             document.getElementById('fcTotalCount').innerText = activeFlashcards.length;
-            document.getElementById('fcCategoryBadge').innerText = currentQ.Category;
+            
+            const badgesHtml = currentQ.Categories.map(cat => `<span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">${cat}</span>`).join('');
+            document.getElementById('fcCategoryBadges').innerHTML = badgesHtml;
+
             document.getElementById('fcBookBadge').innerText = currentQ.Book;
             document.getElementById('fcQuestionText').innerText = currentQ.Question;
             document.getElementById('fcAnswerText').innerText = currentQ.CorrectAnswer;
             document.getElementById('fcExplanationText').innerText = currentQ.Explanation;
 
-            // Setup YouVersion Link
             const refQuery = encodeURIComponent(currentQ.Reference || currentQ.Book);
             document.getElementById('fcYouVersionLink').href = `https://www.bible.com/search/bible?q=${refQuery}`;
         }
@@ -639,7 +689,6 @@
             statusBox.innerText = "Restored built-in sample question bank successfully.";
         }
 
-        // Simple robust CSV parser handling quotes and commas
         function parseCSV(text) {
             let lines = text.split('\n');
             if (lines.length < 2) return [];
